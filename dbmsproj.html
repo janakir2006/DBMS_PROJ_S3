@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Apollo Hospitals Management System</title>
+    <!-- Load Tailwind CSS from CDN --><script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Custom CSS for modern theme and animation */
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
+
+        /* * Background Setup - Using your custom image URL
+         * Adjusted linear-gradient for better background visibility (0.7 -> 0.5).
+         */
+        .hospital-bg {
+            /* CORRECTED: Reduced opacity from 0.7 to 0.5 for less dominant overlay */
+            background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), 
+                              url('https://raw.githubusercontent.com/k-praneeth567/dbmsimages/main/hospital-2827005_1280.webp');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed; /* Makes the background stay put while scrolling */
+        }
+
+        /* Keyframe for a glowing, pulsing title animation */
+        @keyframes pulse-glow {
+            0%, 100% {
+                /* CORRECTED: Reduced initial text shadow intensity */
+                text-shadow: 
+                    0 0 8px rgba(0, 255, 255, 0.4), /* Cyan glow */
+                    0 0 16px rgba(0, 255, 255, 0.4);
+                transform: scale(1);
+                opacity: 0.9;
+            }
+            50% {
+                /* CORRECTED: Reduced peak text shadow intensity and subtle scale */
+                text-shadow: 
+                    0 0 20px rgba(0, 255, 255, 0.8), /* Stronger glow */
+                    0 0 40px rgba(0, 255, 255, 0.6);
+                transform: scale(1.01); /* Reduced pulse from 1.02 */
+                opacity: 1;
+            }
+        }
+
+        .animated-title {
+            font-family: 'Inter', sans-serif;
+            animation: pulse-glow 4s infinite ease-in-out;
+            will-change: transform, text-shadow;
+        }
+
+        /* Styling for the action links (now replacing buttons) */
+        .action-link {
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            text-decoration: none; /* Ensure links do not have an underline */
+        }
+
+        .action-link:hover {
+            transform: translateY(-4px) scale(1.05);
+            box-shadow: 0 10px 15px rgba(0, 255, 255, 0.3), 0 4px 6px rgba(0, 0, 0, 0.1);
+            background-color: #008cba; /* A slightly darker teal on hover */
+        }
+    </style>
+</head>
+<body class="hospital-bg min-h-screen flex flex-col text-white font-[Inter]">
+
+    <!-- Header / Navigation Bar --><header class="w-full p-4 md:p-6 bg-gray-900 bg-opacity-80 shadow-2xl backdrop-blur-sm sticky top-0 z-10">
+        <div class="container mx-auto flex justify-between items-center">
+            <!-- Left Side: Admin Panel --><div class="text-xl font-extrabold text-cyan-300 tracking-wider">
+                ADMIN PANEL
+            </div>
+
+            <!-- Right Side: Home and Profile --><div class="flex items-center space-x-6">
+                <a href="#" class="text-lg font-semibold hover:text-cyan-400 transition-colors">HOME</a>
+                <!-- User Profile Circle --><div class="w-10 h-10 bg-gray-700 border-2 border-cyan-400 rounded-full flex items-center justify-center cursor-pointer hover:ring-2 hover:ring-cyan-500 transition-all" title="User Profile">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 text-cyan-400">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 19.5a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z" />
+                    </svg>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content Area --><main class="flex-grow flex flex-col items-center justify-center p-4 md:p-8">
+
+        <!-- Central Animated Title --><div class="text-center mb-10"> <!-- Adjusted margin-bottom --><h1 class="animated-title text-4xl sm:text-6xl lg:text-7xl font-black uppercase tracking-widest text-white">
+                APOLLO HOSPITALS
+            </h1>
+        </div>
+
+        <!-- Action Panel --><div class="w-full max-w-6xl bg-gray-900 bg-opacity-70 p-6 md:p-10 rounded-xl shadow-3xl backdrop-blur-sm border border-cyan-800">
+            
+            <!-- Section Title --><h2 class="text-xl md:text-2xl font-light text-center text-gray-200 mb-8 pb-4 border-b border-cyan-700 tracking-wider">
+                VIEW DETAILS OF :
+            </h2>
+
+            <!-- Button Grid --><div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4 md:gap-6 button-grid">
+                
+                <!-- Array of link names as per the outline --><script>
+                    const buttons = [
+                        "Patient", "Doctor", "All Staff", "Appointment", "Medicine",
+                        "Room", "Admissions", "Bill", "Department", "Prescription"
+                    ];
+                    
+                    const icons = {
+                        "Patient": "M5 3.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5ZM2.5 14h6.586a1 1 0 0 1 .707.293l2.853 2.853a1 1 0 0 1 0 1.414l-2.853 2.853a1 1 0 0 1-1.414 0l-2.853-2.853A1 1 0 0 1 5.414 18H2.5a.5.5 0 0 1 0-1h2.914a.5.5 0 0 0 .353-.147l2.853-2.853a.5.5 0 0 0 0-.707l-2.853-2.853A.5.5 0 0 0 5.414 14H2.5a.5.5 0 0 1 0-1Z",
+                        "Doctor": "M12 4a4 4 0 1 0 0 8 4 4 0 0 0 0-8ZM12 14c4.418 0 8 3.582 8 8a.5.5 0 0 1-1 0c0-3.86-3.14-7-7-7s-7 3.14-7 7a.5.5 0 0 1-1 0c0-4.418 3.582-8 8-8Z",
+                        "All Staff": "M20.25 7.75a.75.75 0 0 0-1.5 0v.5h-15V7.75a.75.75 0 0 0-1.5 0v8.5a.75.75 0 0 0 1.5 0v-.5h15v.5a.75.75 0 0 0 1.5 0v-8.5Z",
+                        "Appointment": "M17.5 4a.5.5 0 0 1 .5.5v2h-13v-2a.5.5 0 0 1 .5-.5h12ZM6.5 11h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1 0-1Z",
+                        "Medicine": "M12 4a.5.5 0 0 0-.5.5v5.5H6.5a.5.5 0 0 0 0 1h5V16a.5.5 0 0 0 1 0v-5h5.5a.5.5 0 0 0 0-1h-5v-5.5a.5.5 0 0 0-.5-.5Z",
+                        "Room": "M3 3h18a1 1 0 0 1 1 1v16a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1Zm1 2v14h16V5H4Z",
+                        "Admissions": "M15.5 7a.5.5 0 0 0-.5.5v9a.5.5 0 0 0 1 0v-9a.5.5 0 0 0-.5-.5ZM8.5 7a.5.5 0 0 0-.5.5v9a.5.5 0 0 0 1 0v-9a.5.5 0 0 0-.5-.5Z",
+                        "Bill": "M7.5 4a.5.5 0 0 0-.5.5v15a.5.5 0 0 0 1 0V5h12a.5.5 0 0 0 0-1H7.5Z",
+                        "Department": "M10 2a.5.5 0 0 0-.5.5V5H4a1 1 0 0 0-1 1v14a1 1 0 0 0 1 1h16a1 1 0 0 0 1-1V6a1 1 0 0 0-1-1h-5.5V2.5a.5.5 0 0 0-1 0V5h-3V2.5a.5.5 0 0 0-.5-.5Z",
+                        "Prescription": "M12 2a.5.5 0 0 0-.5.5V5H8.5a.5.5 0 0 0-.5.5v15a.5.5 0 0 0 1 0V11h3.5a.5.5 0 0 0 .5-.5V2.5a.5.5 0 0 0-.5-.5Z"
+                    };
+
+                    const container = document.querySelector('.button-grid');
+
+                    buttons.forEach(text => {
+                        const path = icons[text] || "M10 4a6 6 0 1 0 0 12 6 6 0 0 0 0-12Z"; // Default icon
+                        
+                        // NOTE: Changed from <button> to <a href="#"> to make them external links
+                        const linkHtml = `
+                            <a href="#" class="action-link flex flex-col items-center justify-center p-4 rounded-lg bg-cyan-600 hover:bg-cyan-700 text-white font-semibold text-sm sm:text-base transition-all duration-300 transform shadow-lg hover:shadow-cyan-500/50 cursor-pointer text-center">
+                                <!-- SVG Icon Placeholder --><svg class="w-8 h-8 sm:w-10 sm:h-10 mb-2" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="${path}" fill="white"/>
+                                </svg>
+                                ${text}
+                            </a>
+                        `;
+                        container.insertAdjacentHTML('beforeend', linkHtml);
+                    });
+                </script>
+            </div>
+        </div>
+    </main>
+    
+    <!-- Footer (Optional but good practice) --><footer class="w-full p-3 bg-gray-900 bg-opacity-80 text-center text-sm text-gray-500 mt-auto">
+        &copy; 2025 Apollo Hospitals Management System. All Rights Reserved.
+    </footer>
+
+</body>
+</html>

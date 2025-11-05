@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Apollo Hospitals Management System - Simple Layout</title>
+    <!-- Load Tailwind CSS from CDN --><script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Custom CSS for modern theme and animation */
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
+
+        /* * Background Setup - Using the established Apollo theme background
+         * Overlay opacity set to 0.5 for better background visibility.
+         */
+        .hospital-bg {
+            /* CORRECTED: Updated the background image URL as requested */
+            background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), 
+                              url('https://raw.githubusercontent.com/k-praneeth567/dbmsimages/main/happy-black-pediatrician-talking-little-girl-who-came-with-mother-clinic-covid19-pandemic.webp');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+        }
+
+        /* Keyframe for a glowing title animation */
+        @keyframes pulse-glow {
+            0%, 100% {
+                text-shadow: 
+                    0 0 8px rgba(0, 255, 255, 0.4), /* Cyan glow */
+                    0 0 16px rgba(0, 255, 255, 0.4);
+                transform: scale(1);
+                opacity: 0.9;
+            }
+            50% {
+                text-shadow: 
+                    0 0 20px rgba(0, 255, 255, 0.8), /* Stronger glow */
+                    0 0 40px rgba(0, 255, 255, 0.6);
+                transform: scale(1.01); 
+                opacity: 1;
+            }
+        }
+
+        .animated-title {
+            font-family: 'Inter', sans-serif;
+            animation: pulse-glow 4s infinite ease-in-out;
+            will-change: transform, text-shadow;
+            /* Applying specific font style for the "good fashioned way" look */
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+        }
+        
+        .header-logo-container {
+            /* Ensures the logo area maintains vertical centering with nav items */
+            display: flex;
+            align-items: center;
+            height: 100%; /* Match header height */
+        }
+    </style>
+</head>
+<body class="hospital-bg min-h-screen flex flex-col text-white font-[Inter]">
+
+    <!-- Header / Navigation Bar --><header class="w-full p-4 md:p-6 bg-gray-900 bg-opacity-80 shadow-2xl backdrop-blur-sm sticky top-0 z-10">
+        <div class="container mx-auto flex justify-between items-center">
+            <!-- Left Side: Custom Image (Placeholder - REPLACE THE SRC BELOW WITH YOUR IMAGE URL) --><div class="header-logo-container">
+                <img 
+                    src="https://raw.githubusercontent.com/k-praneeth567/dbmsimages/main/Screenshot%202025-11-05%20185120.webp" 
+                    alt="Custom Header Image" 
+                    class="h-8 md:h-10 object-contain"
+                >
+            </div>
+
+            <!-- Right Side: Profile Circle --><div class="flex items-center space-x-6">
+                <a href="#" class="text-lg font-semibold hover:text-cyan-400 transition-colors">HOME</a>
+                <!-- User Profile Circle --><div class="w-10 h-10 bg-gray-700 border-2 border-cyan-400 rounded-full flex items-center justify-center cursor-pointer hover:ring-2 hover:ring-cyan-500 transition-all" title="User Profile">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 text-cyan-400">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 19.5a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z" />
+                    </svg>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content Area: Focus on Central Title Box --><main class="flex-grow flex flex-col items-center justify-center p-4 md:p-8">
+
+        <!-- Central Animated Title Box --><div class="w-full max-w-xl bg-gray-900 bg-opacity-70 p-10 md:p-16 rounded-xl shadow-3xl backdrop-blur-sm border border-cyan-800 text-center">
+            
+            <!-- The "HOSPITAL NAME IN A GOOD FASHIONED WAY" text --><h1 class="animated-title text-3xl sm:text-4xl lg:text-5xl font-black text-cyan-300">
+                Apollo Hospitals
+            </h1>
+            <p class="mt-4 text-sm sm:text-base text-gray-400 italic">
+                Caring for life. Since 1983.
+            </p>
+        </div>
+
+    </main>
+    
+    <!-- Footer (Optional but good practice) --><footer class="w-full p-3 bg-gray-900 bg-opacity-80 text-center text-sm text-gray-500 mt-auto">
+        &copy; 2025 Apollo Hospitals Management System. All Rights Reserved.
+    </footer>
+
+</body>
+</html>
