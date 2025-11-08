@@ -8,22 +8,33 @@
 <style>
     body {
         background-color: #0f1d1d;
-        margin: 0;
         font-family: Arial, sans-serif;
         color: #e8ffff;
+        margin: 0;
+        padding: 0;
+    }
+
+    /* Page Header */
+    .top-header {
+        background-color: #0b3939;
+        padding: 18px 40px;
+        border-bottom: 2px solid #1fa7a7;
+        color: #e8ffff;
+        font-size: 22px;
+        font-weight: bold;
     }
 
     .profile-container {
-        width: 90%;
+        width: 92%;
         margin: 40px auto;
         border: 2px solid #1fa7a7;
-        border-radius: 10px;
+        border-radius: 12px;
         background-color: #102727;
         box-shadow: 0 0 18px #0d3c3c;
-        padding-bottom: 30px;
+        padding-bottom: 40px;
     }
 
-    .header {
+    .section-header {
         padding: 18px;
         border-bottom: 2px solid #1fa7a7;
         font-size: 24px;
@@ -31,37 +42,83 @@
         text-align: left;
     }
 
-    .content {
+    /* Input Row */
+    .input-row {
+        margin: 25px 40px;
+        font-size: 17px;
         display: flex;
-        padding: 35px;
-        gap: 50px;
+        align-items: center;
+        gap: 12px;
     }
 
+    .input-row input {
+        padding: 9px;
+        background-color: #0f1d1d;
+        border: 1.8px solid #1fa7a7;
+        border-radius: 6px;
+        color: #e8ffff;
+        width: 170px;
+    }
+
+    .view-btn {
+        padding: 7px 14px;
+        background-color: #1fa7a7;
+        border: none;
+        border-radius: 6px;
+        cursor: pointer;
+        font-size: 14px;
+        font-weight: bold;
+        color: black;
+        transition: 0.3s;
+    }
+    .view-btn:hover { background-color: #35f5f5; transform: scale(1.05); }
+
+    /* Profile Content */
+    .content {
+        display: flex;
+        gap: 70px;
+        padding: 20px 50px 40px 50px;
+    }
+
+    /* Profile Picture + Name */
     .photo-section {
         text-align: center;
-        min-width: 160px;
+        min-width: 200px;
     }
 
     .profile-pic {
-        width: 120px;
-        height: 120px;
-        border: 2px solid #1fa7a7;
+        width: 150px;
+        height: 150px;
+        border: 3px solid #1fa7a7;
         border-radius: 50%;
-        background-color: #0f1d1d;
-        margin-bottom: 10px;
+        background-image: url('https://raw.githubusercontent.com/k-praneeth567/dbmsimages/main/Screenshot%202025-11-08%20211008.webp');
+        background-size: cover;
+        background-position: center;
+        margin-bottom: 8px; /* Ensures text sits directly below */
     }
 
-    .patient-name {
-        font-size: 18px;
-        font-weight: bold;
-    }
-
-    .details-section {
+    .patient-name-tag {
+        background-color: #e8ffff;
+        padding: 6px 14px;
+        border-radius: 8px;
         font-size: 17px;
-        line-height: 32px;
+        font-weight: bold;
+        color: black;
+        display: inline-block;
+        margin-top: 0; /* Ensures it is exactly below */
     }
 
-    .details-section span {
+    /* Patient Details */
+    .details {
+        font-size: 18px;
+        line-height: 36px;
+        display: grid;
+        grid-template-columns: 220px auto 220px auto;
+        column-gap: 70px;
+        row-gap: 18px;
+    }
+
+    .details span {
         font-weight: bold;
         color: #35f5f5;
     }
@@ -70,33 +127,71 @@
 </head>
 <body>
 
+<!-- Page Header -->
+<div class="top-header">HOSPITAL SYSTEM</div>
+
 <div class="profile-container">
 
-    <div class="header">PATIENT PROFILE</div>
+    <div class="section-header">PATIENT PROFILE</div>
+
+    <!-- Patient ID Input -->
+    <div class="input-row">
+        <label>Enter Patient ID:</label>
+        <input type="text" id="patientIdInput" placeholder="P24001" pattern="P24[0-9]{3}">
+        <button class="view-btn" onclick="viewProfile()">View</button>
+    </div>
 
     <div class="content">
 
-        <!-- Profile Picture Section -->
+        <!-- Profile Picture & Name -->
         <div class="photo-section">
             <div class="profile-pic"></div>
-            <div class="patient-name">Patient Name</div>
+            <div class="patient-name-tag" id="patientName">Name</div>
         </div>
 
-        <!-- Information Section -->
-        <div class="details-section">
-            <div><span>Patient ID:</span> P24001</div>
-            <div><span>Gender:</span> Male</div>
-            <div><span>DOB:</span> 2001-08-12</div>
-            <div><span>Phone:</span> 9876543210</div>
-            <div><span>Email:</span> patient@example.com</div>
-            <div><span>Blood Group:</span> B+</div>
-            <div><span>Admission Date:</span> 2025-02-03</div>
-            <div><span>Emergency Contact:</span> 9123456789</div>
-            <div><span>Consulting Doctor:</span> Dr. Anjali Verma (DOC007)</div>
+        <!-- Patient Details -->
+        <div class="details">
+            <span>Patient ID:</span> <div id="p_id">----</div>
+            <span>Gender:</span> <div id="gender">----</div>
+
+            <span>DOB:</span> <div id="dob">----</div>
+            <span>Phone:</span> <div id="phone">----</div>
+
+            <span>Email:</span> <div id="email">----</div>
+            <span>Blood Group:</span> <div id="blood">----</div>
+
+            <span>Admission Date:</span> <div id="admDate">----</div>
+            <span>Emergency Contact:</span> <div id="emg">----</div>
+
+            <span>Consulting Doctor:</span> <div id="doctor">----</div>
         </div>
 
     </div>
+
 </div>
+
+<script>
+function viewProfile() {
+    let pid = document.getElementById("patientIdInput").value.trim();
+
+    if (!/^P24[0-9]{3}$/.test(pid)) {
+        alert("Patient ID must be in format P24xxx (Example: P24015)");
+        return;
+    }
+
+    // Sample Data (Replace with DB data later)
+    document.getElementById("patientName").textContent = "Janaki R";
+    document.getElementById("p_id").textContent = pid;
+    document.getElementById("gender").textContent = "Female";
+    document.getElementById("dob").textContent = "2003-07-25";
+    document.getElementById("phone").textContent = "9876543201";
+    document.getElementById("email").textContent = "janaki@example.com";
+    document.getElementById("blood").textContent = "O+";
+    document.getElementById("admDate").textContent = "2025-02-08";
+    document.getElementById("emg").textContent = "9123456789";
+    document.getElementById("doctor").textContent = "Dr. Kavya (DOC003)";
+}
+</script>
 
 </body>
 </html>
