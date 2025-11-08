@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Patient Profile</title>
+
+<style>
+    body {
+        background-color: #0f1d1d;
+        margin: 0;
+        font-family: Arial, sans-serif;
+        color: #e8ffff;
+    }
+
+    .profile-container {
+        width: 90%;
+        margin: 40px auto;
+        border: 2px solid #1fa7a7;
+        border-radius: 10px;
+        background-color: #102727;
+        box-shadow: 0 0 18px #0d3c3c;
+        padding-bottom: 30px;
+    }
+
+    .header {
+        padding: 18px;
+        border-bottom: 2px solid #1fa7a7;
+        font-size: 24px;
+        font-weight: bold;
+        text-align: left;
+    }
+
+    .content {
+        display: flex;
+        padding: 35px;
+        gap: 50px;
+    }
+
+    .photo-section {
+        text-align: center;
+        min-width: 160px;
+    }
+
+    .profile-pic {
+        width: 120px;
+        height: 120px;
+        border: 2px solid #1fa7a7;
+        border-radius: 50%;
+        background-color: #0f1d1d;
+        margin-bottom: 10px;
+    }
+
+    .patient-name {
+        font-size: 18px;
+        font-weight: bold;
+    }
+
+    .details-section {
+        font-size: 17px;
+        line-height: 32px;
+    }
+
+    .details-section span {
+        font-weight: bold;
+        color: #35f5f5;
+    }
+
+</style>
+</head>
+<body>
+
+<div class="profile-container">
+
+    <div class="header">PATIENT PROFILE</div>
+
+    <div class="content">
+
+        <!-- Profile Picture Section -->
+        <div class="photo-section">
+            <div class="profile-pic"></div>
+            <div class="patient-name">Patient Name</div>
+        </div>
+
+        <!-- Information Section -->
+        <div class="details-section">
+            <div><span>Patient ID:</span> P24001</div>
+            <div><span>Gender:</span> Male</div>
+            <div><span>DOB:</span> 2001-08-12</div>
+            <div><span>Phone:</span> 9876543210</div>
+            <div><span>Email:</span> patient@example.com</div>
+            <div><span>Blood Group:</span> B+</div>
+            <div><span>Admission Date:</span> 2025-02-03</div>
+            <div><span>Emergency Contact:</span> 9123456789</div>
+            <div><span>Consulting Doctor:</span> Dr. Anjali Verma (DOC007)</div>
+        </div>
+
+    </div>
+</div>
+
+</body>
+</html>
