@@ -14,7 +14,7 @@
         padding: 0;
     }
 
-    /* Page Header */
+    
     .top-header {
         background-color: #0b3939;
         padding: 18px 40px;
@@ -42,7 +42,7 @@
         text-align: left;
     }
 
-    /* Input Row */
+   
     .input-row {
         margin: 25px 40px;
         font-size: 17px;
@@ -73,17 +73,20 @@
     }
     .view-btn:hover { background-color: #35f5f5; transform: scale(1.05); }
 
-    /* Profile Content */
+    
     .content {
         display: flex;
         gap: 70px;
         padding: 20px 50px 40px 50px;
     }
 
-    /* Profile Picture + Name */
+  
     .photo-section {
         text-align: center;
-        min-width: 200px;
+        min-width: 150px; 
+        display: flex;
+        flex-direction: column;
+        align-items: center; 
     }
 
     .profile-pic {
@@ -94,21 +97,22 @@
         background-image: url('https://raw.githubusercontent.com/k-praneeth567/dbmsimages/main/Screenshot%202025-11-08%20211008.webp');
         background-size: cover;
         background-position: center;
-        margin-bottom: 8px; /* Ensures text sits directly below */
+        margin-bottom: 8px;
+        flex: 0 0 auto;
     }
 
     .patient-name-tag {
-        background-color: #e8ffff;
-        padding: 6px 14px;
-        border-radius: 8px;
-        font-size: 17px;
+        color: white;
+        font-size: 18px;
         font-weight: bold;
-        color: black;
-        display: inline-block;
-        margin-top: 0; /* Ensures it is exactly below */
+        text-align: center;
+        margin: 0;               
+        width: 100%;            
+        max-width: 160px;
+        word-break: break-word;
     }
 
-    /* Patient Details */
+
     .details {
         font-size: 18px;
         line-height: 36px;
@@ -127,14 +131,14 @@
 </head>
 <body>
 
-<!-- Page Header -->
+
 <div class="top-header">HOSPITAL SYSTEM</div>
 
 <div class="profile-container">
 
     <div class="section-header">PATIENT PROFILE</div>
 
-    <!-- Patient ID Input -->
+
     <div class="input-row">
         <label>Enter Patient ID:</label>
         <input type="text" id="patientIdInput" placeholder="P24001" pattern="P24[0-9]{3}">
@@ -143,13 +147,13 @@
 
     <div class="content">
 
-        <!-- Profile Picture & Name -->
+
         <div class="photo-section">
             <div class="profile-pic"></div>
             <div class="patient-name-tag" id="patientName">Name</div>
         </div>
 
-        <!-- Patient Details -->
+        
         <div class="details">
             <span>Patient ID:</span> <div id="p_id">----</div>
             <span>Gender:</span> <div id="gender">----</div>
@@ -179,7 +183,7 @@ function viewProfile() {
         return;
     }
 
-    // Sample Data (Replace with DB data later)
+
     document.getElementById("patientName").textContent = "Janaki R";
     document.getElementById("p_id").textContent = pid;
     document.getElementById("gender").textContent = "Female";
@@ -195,3 +199,4 @@ function viewProfile() {
 
 </body>
 </html>
+
