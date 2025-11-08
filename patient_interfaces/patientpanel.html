@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Patient Panel</title>
+
+<style>
+    body {
+        background-color: #0f1d1d;
+        font-family: Arial, sans-serif;
+        color: #e8ffff;
+        margin: 0;
+        padding: 0;
+    }
+
+    .panel-container {
+        width: 90%;
+        margin: 40px auto;
+        border: 2px solid #1fa7a7;
+        border-radius: 10px;
+        padding: 30px;
+        background-color: #102727;
+        box-shadow: 0 0 18px #0d3c3c;
+    }
+
+    .heading {
+        font-size: 28px;
+        font-weight: bold;
+        margin-bottom: 30px;
+        border-bottom: 2px solid #1fa7a7;
+        padding-bottom: 10px;
+        text-align: center;
+        color: #35f5f5;
+    }
+
+    .option-row {
+        margin: 20px 0;
+        font-size: 18px;
+        display: flex;
+        align-items: center;
+        gap: 16px;
+        flex-wrap: wrap;
+    }
+
+    select {
+        padding: 8px 12px;
+        width: 240px;
+        background-color: #0f1d1d;
+        border: 1.5px solid #1fa7a7;
+        border-radius: 6px;
+        color: #e8ffff;
+        font-size: 15px;
+        outline: none;
+    }
+    select:hover { border-color: #35f5f5; }
+
+    button {
+        padding: 8px 18px;
+        background-color: #1fa7a7;
+        border: none;
+        border-radius: 6px;
+        cursor: pointer;
+        font-size: 15px;
+        color: black;
+        font-weight: bold;
+        transition: 0.25s;
+    }
+    button:hover { background-color: #35f5f5; transform: scale(1.05); }
+</style>
+</head>
+
+<body>
+<div class="panel-container">
+    <div class="heading">Patient Panel</div>
+
+    <div class="option-row">
+        <span>View all Doctors</span>
+        <button>View</button>
+    </div>
+
+    <div class="option-row">
+        <span>View Doctors by Department</span>
+        <select aria-label="Departments">
+            <option disabled selected>Departments</option>
+            <option>General Medicine</option>
+            <option>Cardiology</option>
+            <option>Neurology</option>
+            <option>Orthopedics</option>
+            <option>Pediatrics</option>
+            <option>Dermatology</option>
+        </select>
+        <!-- NEW BUTTON beside departments -->
+        <button>View Department</button>
+    </div>
+
+    <div class="option-row">
+        <span>Book an Appointment</span>
+        <button>Book</button>
+    </div>
+
+    <div class="option-row">
+        <span>View Past Appointments</span>
+        <button>View</button>
+    </div>
+</div>
+</body>
+</html>
