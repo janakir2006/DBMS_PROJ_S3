@@ -1,0 +1,558 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Apollo Hospitals — Landing</title>
+
+<!-- Tailwind CDN (utility classes where convenient) -->
+<script src="https://cdn.tailwindcss.com"></script>
+
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;600;800;900&display=swap');
+  :root{
+    --teal-600: #1fa7a7;
+    --teal-400: #35f5f5;
+    --dark-bg: #0f1d1d;
+    --glass: rgba(16,39,39,0.65);
+  }
+
+  body{
+    margin:0;
+    font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+    background-image:
+      linear-gradient(rgba(0,0,0,0.45), rgba(0,0,0,0.45)),
+      url('https://raw.githubusercontent.com/k-praneeth567/dbmsimages/main/happy-black-pediatrician-talking-little-girl-who-came-with-mother-clinic-covid19-pandemic.webp');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    color: #e8ffff;
+    min-height: 100vh;
+    -webkit-font-smoothing:antialiased;
+  }
+
+  /* Header */
+  header {
+    background: rgba(11,57,57,0.85);
+    backdrop-filter: blur(6px);
+    border-bottom: 1px solid rgba(31,167,167,0.14);
+    position: sticky;
+    top:0;
+    z-index:40;
+  }
+  .header-inner { max-width:1200px; margin:0 auto; display:flex; align-items:center; justify-content:space-between; padding:14px 20px; gap:12px; }
+  .brand { display:flex; align-items:center; gap:12px; }
+  .brand img{ height:44px; width:auto; border-radius:6px; object-fit:cover;}
+  .brand h1{ margin:0; font-weight:800; letter-spacing:0.06em; color:var(--teal-400); font-size:20px; text-shadow:0 4px 18px rgba(0,240,240,0.06) }
+  nav a { color: #cffcff; text-decoration:none; margin-left:14px; font-weight:600; opacity:0.95; transition: color .18s, transform .18s; }
+  nav a:hover { color:#fff; transform:translateY(-2px); }
+
+  /* HERO - big fancy animated heading */
+  .hero {
+    padding:6vh 20px 4vh;
+    text-align:center;
+  }
+
+  .hero-title {
+    display:inline-block;
+    font-weight:900;
+    line-height:0.96;
+    font-size: clamp(44px, 8vw, 96px);
+    letter-spacing: -0.02em;
+    background: linear-gradient(90deg, #bafaf9 0%, #7fe0df 30%, #39d8d7 60%, #35f5f5 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    text-shadow: 0 12px 40px rgba(19,220,220,0.06);
+    transform-origin: center;
+    transition: transform 420ms cubic-bezier(.2,.9,.35,1), filter .35s;
+    will-change: transform, filter;
+  }
+
+  /* more interesting animation: slow 3D float + shimmer on hover */
+  @keyframes float-tilt {
+    0%{ transform: translateY(0) rotateX(0deg) rotateY(0deg); }
+    50%{ transform: translateY(-10px) rotateX(1deg) rotateY(-1deg); }
+    100%{ transform: translateY(0) rotateX(0deg) rotateY(0deg); }
+  }
+  .hero-title.animate { animation: float-tilt 6.2s ease-in-out infinite; filter: drop-shadow(0 8px 30px rgba(0,240,240,0.05)); }
+
+  .hero-title:hover {
+    transform: perspective(900px) rotateY(-10deg) rotateX(6deg) scale(1.06);
+    filter: drop-shadow(0 18px 60px rgba(53,245,245,0.18)) saturate(1.1);
+  }
+
+  .hero-sub {
+    position: relative;
+    overflow: hidden;
+  }
+  .hero-sub::after{
+    content: "";
+    position: absolute;
+    inset: 0;
+    left: -60%;
+    background: linear-gradient(90deg, rgba(255,255,255,0.00) 0%, rgba(255,255,255,0.06) 50%, rgba(255,255,255,0.00) 100%);
+    transform: skewX(-18deg);
+    transition: none;
+    animation: shimmer 5s linear infinite;
+    pointer-events: none;
+  }
+  @keyframes shimmer { to { left: 160%; } }
+
+  /* CTA area (optional) */
+  .cta-row { margin-top:20px; display:flex; gap:12px; justify-content:center; flex-wrap:wrap; }
+
+  .cta-btn {
+    position: relative;
+    overflow: hidden;
+    transition: transform .18s, box-shadow .18s, background .18s;
+  }
+  .cta-btn::before {
+    content: "";
+    position: absolute; inset: -2px;
+    background: linear-gradient(90deg, rgba(31,167,167,0.06), rgba(53,245,245,0.06));
+    filter: blur(10px);
+    opacity: 0;
+    transition: opacity .25s;
+    z-index: -1;
+    border-radius: 10px;
+  }
+  .cta-btn:hover::before { opacity: 1; }
+  .cta-btn:active { transform: translateY(1px) scale(0.995); }
+
+  /* about card + layout */
+  .about {
+    max-width:1200px;
+    margin:28px auto;
+    background: linear-gradient(180deg, rgba(16,39,39,0.75), rgba(8,24,24,0.62));
+    border:1px solid rgba(31,167,167,0.12);
+    border-radius:14px;
+    padding:28px;
+    display:flex;
+    gap:22px;
+    align-items:flex-start;
+    box-shadow:0 18px 50px rgba(3,18,18,0.55);
+    backdrop-filter: blur(6px);
+    opacity:0;
+    transform: translateY(8px);
+    transition: opacity .6s ease, transform .6s ease;
+  }
+  .about.show {
+    opacity:1;
+    transform: translateY(0);
+    box-shadow: 0 28px 60px rgba(6,50,50,0.5);
+    border-image: linear-gradient(90deg, rgba(31,167,167,0.8), rgba(53,245,245,0.6)) 1;
+  }
+
+  .about-left { flex:1 1 60%; min-width:260px; }
+  .about-right { flex:1 1 34%; min-width:220px; }
+
+  .section-title { color:var(--teal-400); font-weight:800; letter-spacing:0.02em; font-size:1.05rem; margin-bottom:8px; }
+  .about-text { color:#dff8f8; line-height:1.6; margin-bottom:12px; }
+
+  .spec-grid { display:grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap:12px; margin-top:12px; }
+  .spec-item { background: rgba(255,255,255,0.02); padding:12px; border-radius:8px; border:1px solid rgba(31,167,167,0.06); }
+
+  .equip-list { margin-top:10px; display:flex; flex-direction:column; gap:8px; }
+
+  /* gallery grid */
+  .gallery { margin-top:18px; }
+  .grid { display:grid; grid-template-columns: repeat(auto-fit, minmax(150px,1fr)); gap:14px; }
+  .img-slot {
+    background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(0,0,0,0.04));
+    border-radius:10px;
+    overflow:hidden;
+    border:1px solid rgba(31,167,167,0.06);
+    cursor:pointer;
+    transition: transform .28s ease, box-shadow .28s ease;
+    position:relative;
+    transform-origin:center;
+    transition: transform .38s cubic-bezier(.2,.9,.3,1), box-shadow .28s;
+    will-change: transform;
+  }
+  .img-slot:hover {
+    transform: translateY(-8px) rotateX(3deg) rotateY(-3deg) scale(1.03);
+    box-shadow: 0 30px 70px rgba(9,80,80,0.16);
+  }
+  .img-slot img { width:100%; height:100%; object-fit:cover; display:block; }
+
+  .img-caption-small { position:absolute; left:8px; bottom:8px; background:rgba(0,0,0,0.45); padding:6px 8px; border-radius:6px; font-size:12px; color:#dff; backdrop-filter:blur(4px); }
+
+  /* lightbox overlay (centered enlarged image) */
+  .lightbox {
+    position:fixed; inset:0; display:flex; align-items:center; justify-content:center;
+    background: rgba(0,0,0,0.85); z-index:80; opacity:0; pointer-events:none; transition: opacity .35s ease;
+  }
+  .lightbox.visible { opacity:1; pointer-events:auto; }
+
+  .lightbox-inner { position:relative; max-width:95%; max-height:90%; display:flex; align-items:center; justify-content:center; gap:10px; }
+  .lightbox img { max-width:85vw; max-height:80vh; border-radius:10px; box-shadow:0 30px 80px rgba(0,200,200,0.12); transform: scale(0.9); transition: transform .35s cubic-bezier(.2,.9,.35,1); }
+  .lightbox.visible img { transform: scale(1); }
+
+  .lb-controls { position:absolute; top:8px; right:8px; display:flex; gap:8px; z-index:90; }
+  .lb-btn { background: rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.04); color:#e8ffff; padding:8px 10px; border-radius:8px; cursor:pointer; font-weight:700; }
+  .lb-btn:hover { background: rgba(255,255,255,0.06); transform: translateY(-2px); }
+
+  /* prev/next arrows */
+  .nav-arrow { position:absolute; top:50%; transform:translateY(-50%); font-size:28px; color:#eaf; background: rgba(0,0,0,0.35); border-radius:999px; width:54px; height:54px; display:flex; align-items:center; justify-content:center; cursor:pointer; transition: transform .18s, box-shadow .18s; }
+  .nav-arrow:hover { transform:translateY(-50%) scale(1.04); box-shadow:0 18px 44px rgba(0,200,200,0.08); }
+  .nav-left { left:18px; }
+  .nav-right { right:18px; }
+
+  /* caption overlay on lightbox bottom */
+  .lightbox-caption {
+    position:absolute; left:50%; transform:translateX(-50%); bottom:22px; background:rgba(0,0,0,0.45); color:#dff; padding:10px 14px; border-radius:8px; font-size:14px; max-width:88%; text-align:center; backdrop-filter:blur(4px);
+  }
+
+  /* small toggle for caption */
+  .caption-toggle { font-size:13px; opacity:0.95; }
+
+  /* reveal animation for on-scroll elements (images & about) */
+  .reveal { opacity:0; transform: translateY(14px); transition: opacity .7s ease, transform .7s ease; }
+  .reveal.show { opacity:1; transform: translateY(0); }
+
+  /* footer */
+  footer { text-align:center; padding:18px; color:#cfeef0; opacity:0.85; margin-top:30px; }
+  @media (max-width:640px){
+    .about { flex-direction:column; }
+    .about-right{ width:100%;}
+    .hero { padding-top:4vh; padding-bottom:3vh; }
+  }
+
+  /* Particles canvas behind content */
+  #particles {
+    position: fixed;
+    inset: 0;
+    z-index: 2; /* behind header(40) but above page bg (body image) */
+    pointer-events: none;
+    mix-blend-mode: screen;
+    opacity: 0.55;
+  }
+
+  /* make hero content float above particles */
+  .hero { position: relative; z-index: 10; }
+
+  /* glowing CTA */
+  .cta-btn {
+    position: relative;
+    overflow: hidden;
+    transition: transform .18s, box-shadow .18s, background .18s;
+  }
+  .cta-btn::before {
+    content: "";
+    position: absolute; inset: -2px;
+    background: linear-gradient(90deg, rgba(31,167,167,0.06), rgba(53,245,245,0.06));
+    filter: blur(10px);
+    opacity: 0;
+    transition: opacity .25s;
+    z-index: -1;
+    border-radius: 10px;
+  }
+  .cta-btn:hover::before { opacity: 1; }
+  .cta-btn:active { transform: translateY(1px) scale(0.995); }
+
+  /* brand logo float */
+  .brand img { animation: floatLogo 6s ease-in-out infinite; transform-origin:center; }
+  @keyframes floatLogo { 0%{ transform:translateY(0);}50%{ transform:translateY(-6px) rotate(-1deg);}100%{ transform:translateY(0);} }
+</style>
+</head>
+<body>
+  <!-- particles canvas (inserted near top so it's behind content but above bg) -->
+  <canvas id="particles" aria-hidden="true"></canvas>
+
+  <!-- HEADER -->
+  <header>
+    <div class="header-inner">
+      <div class="brand">
+        <img src="https://raw.githubusercontent.com/k-praneeth567/dbmsimages/main/Screenshot%202025-11-05%20185120.webp" alt="Apollo logo">
+        <h1>APOLLO</h1>
+      </div>
+
+      <nav>
+        <a href="#">Patient</a>
+        <a href="#">Doctor</a>
+        <a href="#">Admin</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-wrap">
+      <h2 class="hero-title animate">Apollo Hospitals</h2>
+      <p class="hero-sub">Compassionate care, modern medicine — where expertise meets empathy. Trusted specialists and state-of-the-art equipment across multi-specialties.</p>
+
+      <div class="cta-row" style="margin-top:20px;">
+        <!-- Buttons removed per request -->
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT & GALLERY -->
+  <section class="about reveal" id="aboutSection">
+    <div class="about-left">
+      <div class="section-title">About Apollo Hospitals</div>
+      <div class="about-text">
+        Apollo Hospitals is a premier healthcare network committed to delivering high-quality, compassionate care. With multi-disciplinary teams of senior clinicians and advanced diagnostics,
+        we combine clinical excellence with the latest medical technology to treat complex conditions and provide routine care with the same attention to detail.
+      </div>
+
+      <div class="section-title" style="margin-top:10px;">Specialties</div>
+      <div class="spec-grid">
+        <div class="spec-item">Cardiology & Cardiac Surgery</div>
+        <div class="spec-item">Neurology & Neurosurgery</div>
+        <div class="spec-item">Orthopedics & Joint Replacement</div>
+        <div class="spec-item">Pediatrics & Neonatology</div>
+        <div class="spec-item">Oncology — Medical & Surgical</div>
+        <div class="spec-item">Dermatology & Aesthetic Care</div>
+        <div class="spec-item">Gastroenterology & Hepatology</div>
+        <div class="spec-item">Critical Care & Emergency Medicine</div>
+      </div>
+
+      <div class="section-title" style="margin-top:12px;">Multispecialty Equipment & Services</div>
+      <div class="equip-list">
+        <div>• MRI (3T & 1.5T) with advanced neuroimaging</div>
+        <div>• CT (64/128 slice) with low-dose protocols</div>
+        <div>• Cath labs & hybrid ORs for minimally invasive cardiac care</div>
+        <div>• Robotic surgery suites for precision procedures</div>
+        <div>• Comprehensive oncology suites: chemo, radio, PET-CT</div>
+        <div>• Full lab & molecular diagnostics, ICU ventilators & ECMO</div>
+      </div>
+    </div>
+
+    <aside class="about-right">
+      <div class="section-title">Gallery</div>
+      <div class="gallery grid" id="galleryGrid">
+        <!-- existing images + new images you provided - captions shown in overlay -->
+        <div class="img-slot reveal"><img src="https://raw.githubusercontent.com/k-praneeth567/dbmsimages/main/pexels-shvetsa-4421494.webp" alt="Pediatric care" data-caption="Pediatric Care: gentle & specialised"></div>
+        <div class="img-slot reveal"><img src="https://raw.githubusercontent.com/k-praneeth567/dbmsimages/main/pexels-igor-starkov-233202-756083.webp" alt="Operating room" data-caption="State-of-the-art operating theatres"></div>
+        <div class="img-slot reveal"><img src="https://raw.githubusercontent.com/k-praneeth567/dbmsimages/main/logo_make_11_06_2023_377.webp" alt="Hospital logo" data-caption="Our identity — caring for life"></div>
+        <div class="img-slot reveal"><img src="https://raw.githubusercontent.com/k-praneeth567/dbmsimages/main/hospital-2827005_1280.webp" alt="Hospital lobby" data-caption="Welcoming lobbies & patient support"></div>
+
+        <!-- new images you listed -->
+        <div class="img-slot reveal"><img src="https://raw.githubusercontent.com/k-praneeth567/dbmsimages/main/pexels-mart-production-7089017.webp" alt="Surgical team" data-caption="Surgical team performing complex procedures"></div>
+        <div class="img-slot reveal"><img src="https://raw.githubusercontent.com/k-praneeth567/dbmsimages/main/empty-hallway-background.webp" alt="Hallway" data-caption="Modern clean corridors"></div>
+        <div class="img-slot reveal"><img src="https://raw.githubusercontent.com/k-praneeth567/dbmsimages/main/pexels-cristian-rojas-8459996.webp" alt="Medical equipment" data-caption="Advanced diagnostic equipment"></div>
+        <div class="img-slot reveal"><img src="https://raw.githubusercontent.com/k-praneeth567/dbmsimages/main/logo_make_11_06_2023_412.webp" alt="Brand logo" data-caption="Apollo brand & trust"></div>
+        <div class="img-slot reveal"><img src="https://raw.githubusercontent.com/k-praneeth567/dbmsimages/main/pexels-shvetsa-4226219.webp" alt="Patient care" data-caption="Compassionate patient care"></div>
+      </div>
+
+      <div class="img-caption" style="margin-top:10px; font-size:13px; color:#bfeeee;">Tap / Click any image to enlarge. Use arrows or keyboard ← → to navigate. Click background or Esc to close.</div>
+    </aside>
+  </section>
+
+  <!-- Lightbox -->
+  <div id="lightbox" class="lightbox" aria-hidden="true">
+    <div class="lightbox-inner">
+      <div id="navLeft" class="nav-arrow nav-left" title="Previous">‹</div>
+      <div id="lightboxContent" style="position:relative;">
+        <img id="lightboxImg" src="" alt="">
+        <div class="lb-controls" aria-hidden="false" style="right:12px; top:12px;">
+          <button id="captionToggle" class="lb-btn caption-toggle">Hide caption</button>
+          <button id="closeBtn" class="lb-btn" title="Close">Close</button>
+        </div>
+        <div id="lightboxCaption" class="lightbox-caption"></div>
+      </div>
+      <div id="navRight" class="nav-arrow nav-right" title="Next">›</div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer>
+    &copy; 2025 Apollo Hospitals Management System — Excellence in healthcare
+  </footer>
+
+<script>
+  // SCROLL REVEAL - intersection observer
+  const revealEls = document.querySelectorAll('.reveal');
+  const obs = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('show');
+        e.target.classList.add('show'); // for about & imgs
+        // also reveal children images if needed
+        obs.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.15 });
+
+  revealEls.forEach(el => obs.observe(el));
+
+  // GALLERY + LIGHTBOX LOGIC
+  const galleryImgs = Array.from(document.querySelectorAll('.img-slot img'));
+  const lightbox = document.getElementById('lightbox');
+  const lbImg = document.getElementById('lightboxImg');
+  const lbCaption = document.getElementById('lightboxCaption');
+  const captionToggle = document.getElementById('captionToggle');
+  const closeBtn = document.getElementById('closeBtn');
+  const navLeft = document.getElementById('navLeft');
+  const navRight = document.getElementById('navRight');
+
+  let currentIndex = 0;
+  let captionVisible = true;
+
+  function openLightbox(index){
+    currentIndex = index;
+    const img = galleryImgs[index];
+    lbImg.src = img.src;
+    lbImg.alt = img.alt || '';
+    lbCaption.textContent = img.dataset.caption || img.alt || '';
+    lightbox.classList.add('visible');
+    lightbox.setAttribute('aria-hidden','false');
+  }
+  function closeLightbox(){
+    lightbox.classList.remove('visible');
+    lightbox.setAttribute('aria-hidden','true');
+    lbImg.src = '';
+  }
+  function showNext(){
+    currentIndex = (currentIndex + 1) % galleryImgs.length;
+    updateLightbox();
+  }
+  function showPrev(){
+    currentIndex = (currentIndex - 1 + galleryImgs.length) % galleryImgs.length;
+    updateLightbox();
+  }
+  function updateLightbox(){
+    const img = galleryImgs[currentIndex];
+    // nice fade effect: change src then animate
+    lbImg.classList.remove('fade-in');
+    setTimeout(()=> {
+      lbImg.src = img.src;
+      lbImg.alt = img.alt || '';
+      lbCaption.textContent = img.dataset.caption || img.alt || '';
+    }, 60);
+  }
+
+  // open on click
+  galleryImgs.forEach((img, idx) => {
+    img.addEventListener('click', (e) => { openLightbox(idx); });
+  });
+
+  // close handlers
+  closeBtn.addEventListener('click', closeLightbox);
+  lightbox.addEventListener('click', (e) => {
+    if (e.target === lightbox) closeLightbox();
+  });
+
+  // nav
+  navLeft.addEventListener('click', (e) => { e.stopPropagation(); showPrev(); });
+  navRight.addEventListener('click', (e) => { e.stopPropagation(); showNext(); });
+
+  // key navigation
+  document.addEventListener('keydown', (e) => {
+    if (!lightbox.classList.contains('visible')) return;
+    if (e.key === 'Escape') closeLightbox();
+    if (e.key === 'ArrowRight') showNext();
+    if (e.key === 'ArrowLeft') showPrev();
+  });
+
+  // caption toggle
+  captionToggle.addEventListener('click', (e) => {
+    e.stopPropagation();
+    captionVisible = !captionVisible;
+    if (captionVisible) {
+      lbCaption.style.display = 'block';
+      captionToggle.textContent = 'Hide caption';
+    } else {
+      lbCaption.style.display = 'none';
+      captionToggle.textContent = 'Show caption';
+    }
+  });
+
+  // Prevent arrow clicks from closing
+  document.getElementById('lightboxContent').addEventListener('click', (e) => { e.stopPropagation(); });
+
+  // optional: swipe support for mobile (basic)
+  let touchStartX = 0;
+  let touchEndX = 0;
+  lbImg.addEventListener('touchstart', (e) => { touchStartX = e.changedTouches[0].screenX; }, {passive:true});
+  lbImg.addEventListener('touchend', (e) => {
+    touchEndX = e.changedTouches[0].screenX;
+    if (touchEndX - touchStartX > 40) showPrev();
+    else if (touchStartX - touchEndX > 40) showNext();
+  }, {passive:true});
+
+  // make sure about section also reveals
+  document.querySelector('.about').classList.add('reveal');
+
+  // initial reveal for hero
+  window.addEventListener('load', ()=> {
+    document.querySelector('.hero').classList.add('show');
+  });
+
+  // small header blur-on-scroll
+  const headerEl = document.querySelector('header');
+  window.addEventListener('scroll', () => {
+    if (window.scrollY > 8) headerEl.classList.add('scrolled');
+    else headerEl.classList.remove('scrolled');
+  }, { passive: true });
+
+  // hero parallax (title & subtitle subtle motion on mouse)
+  const hero = document.querySelector('.hero');
+  const heroTitle = document.querySelector('.hero-title');
+  const heroSub = document.querySelector('.hero-sub');
+  if (hero && heroTitle) {
+    hero.addEventListener('mousemove', (e) => {
+      const r = hero.getBoundingClientRect();
+      const x = ((e.clientX - r.left) / r.width) - 0.5;
+      const y = ((e.clientY - r.top) / r.height) - 0.5;
+      const tx = x * 18; const ty = y * 14;
+      heroTitle.style.transform = `translate(${tx}px, ${ty}px) perspective(900px) rotateY(${x*6}deg) rotateX(${y*4}deg) scale(1.01)`;
+      heroSub.style.transform = `translate(${tx * 0.45}px, ${ty * 0.5}px)`;
+    });
+    hero.addEventListener('mouseleave', () => {
+      heroTitle.style.transform = '';
+      heroSub.style.transform = '';
+    });
+  }
+
+  // lightweight particle background (canvas)
+  (function initParticles(){
+    const canvas = document.getElementById('particles');
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
+    let W = canvas.width = innerWidth;
+    let H = canvas.height = innerHeight;
+    const num = Math.max(40, Math.floor((W*H)/90000)); // scale with screen
+    const particles = [];
+    function rand(min,max){ return Math.random()*(max-min)+min; }
+    for(let i=0;i<num;i++){
+      particles.push({
+        x: rand(0,W), y: rand(0,H),
+        r: rand(0.6,2.4),
+        vx: rand(-0.25,0.25),
+        vy: rand(-0.15,0.15),
+        alpha: rand(0.12,0.45)
+      });
+    }
+    function resize(){ W = canvas.width = innerWidth; H = canvas.height = innerHeight; }
+    addEventListener('resize', () => { resize(); }, { passive:true });
+
+    function update(){
+      ctx.clearRect(0,0,W,H);
+      for (let p of particles){
+        p.x += p.vx; p.y += p.vy;
+        if (p.x < -10) p.x = W + 10;
+        if (p.x > W + 10) p.x = -10;
+        if (p.y < -10) p.y = H + 10;
+        if (p.y > H + 10) p.y = -10;
+        ctx.beginPath();
+        const g = ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, p.r*6);
+        g.addColorStop(0, `rgba(63,240,240,${p.alpha})`);
+        g.addColorStop(1, `rgba(31,167,167,0)`);
+        ctx.fillStyle = g;
+        ctx.arc(p.x, p.y, p.r*3.2, 0, Math.PI*2);
+        ctx.fill();
+      }
+      requestAnimationFrame(update);
+    }
+    update();
+  })();
+
+  // small delay reveals for gallery images (improve stagger)
+  const imgSlots = document.querySelectorAll('.img-slot');
+  imgSlots.forEach((el,i) => { el.style.transitionDelay = `${i*60}ms`; });
+</script>
+</body>
+</html>
